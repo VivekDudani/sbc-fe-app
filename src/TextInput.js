@@ -10,13 +10,13 @@ export default function TextInput (props) {
         <Box
             component="form"
             sx={{
-                '& .MuiTextField-root': { m: 1, width: '15ch' },
+                '& .MuiTextField-root': { s: 1, width: '15ch' },
             }}
             noValidate
             autoComplete="off"
         >
             <TextField id="outlined-basic" label={props.name} variant="outlined" size="small"
-                       onBlur={handleBlurEvent} defaultValue={props.data} margin="dense"/>
+                       onBlur={handleBlurEvent} defaultValue={props.data}/>
         </Box>
     )
 }

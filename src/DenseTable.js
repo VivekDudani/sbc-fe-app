@@ -39,8 +39,6 @@ export default function DenseTable(practices) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {/*{console.log(practices.practices)}*/}
-                    {/*{console.log(rows)}*/}
                     {practices.practices.map((row) => (
                         <TableRow
                             key={row.id}

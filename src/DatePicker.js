@@ -5,9 +5,13 @@ import {MobileDatePicker} from "@mui/x-date-pickers";
 
 export default function DatePicker (props) {
     const handleChange = (newValue) => {
-        console.log(newValue.toLocaleString());
+        // console.log(newValue.toLocaleString());
         props.setDate(newValue);
     };
+
+    const curr = new Date();
+    const first = curr.getDate() - curr.getDay() + 1;
+    const firstDate = new Date(curr.setDate(first));
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -16,7 +20,8 @@ export default function DatePicker (props) {
                 inputFormat="DD/MM/YYYY"
                 value={props.data}
                 onChange={handleChange}
-                renderInput={(params) => <TextField {...params} />}
+                minDate={firstDate}
+                renderInput={(params) => <TextField {...params} size="small" sx={{maxWidth: 120}} />}
             />
         </LocalizationProvider>
     )
