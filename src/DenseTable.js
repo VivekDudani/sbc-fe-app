@@ -20,7 +20,7 @@ export default function DenseTable(practices) {
 
     return (
         <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 450 }} size="small" aria-label="a dense table">
+            <Table sx={{ minWidth: 450 }} size="small" aria-label="a dense table" padding="checkbox">
                 <TableHead>
                     <TableRow>
                         <TableCell align="center">Date</TableCell>
@@ -30,6 +30,7 @@ export default function DenseTable(practices) {
                         <TableCell align="center">PF</TableCell>
                         <TableCell align="center">HKM</TableCell>
                         <TableCell align="center">SCS</TableCell>
+                        <TableCell align="center">RR</TableCell>
                         <TableCell align="center">BG Count</TableCell>
                         <TableCell align="center">BG/CC/SB</TableCell>
                         <TableCell align="center">SP Count</TableCell>
@@ -49,12 +50,13 @@ export default function DenseTable(practices) {
                                 {row.practiceDate}
                             </TableCell>
 
-                            <TableCell align="center" >{checkBoolValue(row.ssip)}</TableCell>
+                            <TableCell align="center">{checkBoolValue(row.ssip)}</TableCell>
                             <TableCell align="center" style={{"color": '&:row.spp?"#DBF3C6":"#EE9999"'}}>{checkBoolValue(row.spp)}</TableCell>
                             <TableCell align="center">{row.chanting}</TableCell>
                             <TableCell align="center">{row.pf}</TableCell>
                             <TableCell align="center">{row.hkm}</TableCell>
                             <TableCell align="center">{row.scs}</TableCell>
+                            <TableCell align="center">{row.rr}</TableCell>
                             <TableCell align="center">{row.bgCount}</TableCell>
                             <TableCell align="center">{row.bg}</TableCell>
                             <TableCell align="center">{row.spPostCount}</TableCell>

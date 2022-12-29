@@ -5,7 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import {IconButton, Stack} from "@mui/material";
+import {Stack} from "@mui/material";
 
 export default function FormDialog(props) {
     const [open, setOpen] = React.useState(false);

@@ -11,7 +11,6 @@ import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 const filter = createFilterOptions();
 
 export default function AutoCompleteWithCreate({allCreatedUsers, selectUser, setSelectUser, userDetailsValue, setUserDetailsValue}) {
-    const [value, setValue] = React.useState(null);
     const [open, toggleOpen] = React.useState(false);
 
     const handleClose = () => {
@@ -21,11 +20,6 @@ export default function AutoCompleteWithCreate({allCreatedUsers, selectUser, set
         });
         toggleOpen(false);
     };
-
-    const [dialogValue, setDialogValue] = React.useState({
-        title: '',
-        year: '',
-    });
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -90,14 +84,14 @@ export default function AutoCompleteWithCreate({allCreatedUsers, selectUser, set
                 renderOption={(props, option) => <li {...props}>{option.fullName}</li>}
                 sx={{ width: 280 }}
                 freeSolo
-                renderInput={(params) => <TextField {...params} label="Select User" size="small"/>}
+                renderInput={(params) => <TextField {...params} label="Other Users" size="small"/>}
             />
             <Dialog open={open} onClose={handleClose}>
                 <form onSubmit={handleSubmit}>
                     <DialogTitle>Add new User</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Did you miss any film in our list? Please, add it!
+                            Please add the new user details (cannot be changed later)
                         </DialogContentText>
                         <TextField
                             autoFocus

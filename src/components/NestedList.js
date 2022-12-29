@@ -21,6 +21,7 @@ export default function NestedList(props) {
             sx={{ width: '100%', maxWidth: 1060, bgcolor: 'background.paper' }}
             component="nav"
             aria-labelledby="nested-list-subheader"
+            key={props.userName}
             // subheader={
             //     <ListSubheader component="div" id="nested-list-subheader">
             //         Nested List Items
@@ -36,7 +37,7 @@ export default function NestedList(props) {
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 2 }}>
+                    <ListItemButton sx={{ pl: 1, pr: 1 }}>
                         <DenseTable practices={props.practices}/>
                     </ListItemButton>
                 </List>

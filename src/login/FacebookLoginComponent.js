@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./App.css";
+import "../App.css";
 import FacebookLogin from "@greatsumini/react-facebook-login";
 
 function FacebookLoginComponent() {

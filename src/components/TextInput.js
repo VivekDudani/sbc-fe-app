@@ -16,7 +16,7 @@ export default function TextInput (props) {
             autoComplete="off"
         >
             <TextField id="outlined-basic" label={props.name} variant="outlined" size="small"
-                       onBlur={handleBlurEvent} defaultValue={props.data}/>
+                       onBlur={handleBlurEvent} />
         </Box>
     )
 }
