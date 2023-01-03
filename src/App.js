@@ -3,7 +3,7 @@ import * as React from "react";
 import {useState} from "react";
 import {TextField} from "@mui/material";
 import AddPractices from "./AddPractices";
-import DisplayPractices from "./DisplayPractices";
+import {DisplayPractices} from "./DisplayPractices";
 import GLogin from "./login/GLogin";
 
 let hkc = "हरे कृष्ण हरे कृष्ण, कृष्ण कृष्ण हरे हरे। हरे राम हरे राम, राम राम हरे हरे।।";

@@ -19,7 +19,7 @@ const GET_ALL_PRACTICES = gql`
     }
 `;
 
-const GET_PRACTICES_BY_DATE = gql`
+export const GET_PRACTICES_BY_DATE = gql`
     query GetPracticesByDateRange($startDate: Date!, $endDate: Date!) {
         getPracticesByDateRange(practiceStartDate: $startDate, practiceEndDate: $endDate) {
             userName
@@ -39,15 +39,22 @@ const GET_PRACTICES_BY_DATE = gql`
     }
 `;
 
-function getFormattedDate(inputDate) {
+export function getFormattedDate(inputDate) {
     return dayjs(inputDate).format("YYYY-MM-DD");
 }
 
-function getWeekStartAndEndDate() {
+export function getWeekStartAndEndDate() {
     const curr = new Date();
-    const first = curr.getDate() - curr.getDay() + 1; // Start from Monday
+    const dayOfMonth = curr.getDate();
+    const dayOfWeek = curr.getDay();
+    let first = dayOfMonth - dayOfWeek + 1; // Start from Monday
+    if (dayOfWeek === 0) {
+        first = dayOfMonth - 6; //handle Sunday as last Day of week
+    }
+    let last = first + 6;
+
     const firstDate = new Date(curr.setDate(first));
-    const lastDate = new Date(curr.setDate(firstDate.getDate() + 6));
+    const lastDate = new Date(curr.setDate(last));
     return {fd: firstDate, ld: lastDate};
 }
 
@@ -69,19 +76,8 @@ function FetchPracticeData() {
     return data.getPracticesByDateRange;
 }
 
-export default function DisplayPractices() {
+export function DisplayPractices() {
     const practiceData = Array.from(FetchPracticeData());
-
-    // const allUserDetailsArr = [];
-    // practiceData.map(({
-    //                       userName, practices
-    //                   }) => {
-    //         if (userName) {
-    //             allUserDetailsArr.push({'id': userName, 'name': practices[0].userDetails.fullName})
-    //         }
-    //     }
-    // )
-    // console.log(allUserDetailsArr);
 
     const [inputText, setInputText] = useState("");
     let inputHandler = (e) => {
@@ -133,11 +129,9 @@ function DisplayPractice({practiceData}) {
                                  practices
                              }) =>
         (
-            // <Box sx={{flexGrow: 1}} paddingLeft={3} paddingTop={1} paddingRight={1} paddingBottom={0.1}>
             <Grid container spacing={1}>
                 <NestedList userName={practices.length > 0 ? practices[0].userDetails.fullName : userName}
                             practices={practices}/>
             </Grid>
-            // </Box>
         ));
 }

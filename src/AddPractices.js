@@ -1,6 +1,5 @@
 import {gql, useMutation, useQuery} from "@apollo/client";
-import * as React from "react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import dayjs from "dayjs";
 import {Box, Button, Container, Dialog, DialogActions, DialogContent, Grid, Stack} from "@mui/material";
 import DatePicker from "./DatePicker";
@@ -9,6 +8,8 @@ import TextInput from "./components/TextInput";
 import LabelCheckbox from "./components/LabelCheckbox";
 import DialogTitle from "@mui/material/DialogTitle";
 import AutoCompleteWithCreate from "./components/AutoCompleteWithCreate";
+import TextField from "@mui/material/TextField";
+import {GET_PRACTICES_BY_DATE, getFormattedDate} from "./DisplayPractices";
 
 const ADD_UPDATE_PRACTICE = gql`
     mutation CreateOrUpdateDailyPractice($userName: String!, $fullName: String, $practiceDate: Date!, $ssip: Boolean, $spp: Boolean,
@@ -21,6 +22,10 @@ const ADD_UPDATE_PRACTICE = gql`
             userDetails {
                 userName
                 fullName
+                userCreatedBy {
+                    userName
+                    fullName
+                }
             }
             practiceDate ssip spp chanting hkm scs pf bgCount bg spPostCount sp otCount ot
         }
@@ -41,10 +46,6 @@ const GET_USERS_CREATED_BY = gql`
         }
     }
 `;
-
-function getFormattedDate(inputDate) {
-    return dayjs(inputDate).format("YYYY-MM-DD");
-}
 
 function resetPracticeValues({
                                  setSsip, setSpp, setChanting, setPf, setHkm, setScs, setRr,
@@ -79,6 +80,26 @@ function GetUsersCreatedByCurrentUser(userName) {
     }
 
     return data.getAllUsersByUserCreatedByField;
+}
+
+const TextFieldNum = (props) => {
+    return (
+        <TextField
+            autoFocus
+            sx={{ maxWidth: 75 }}
+            // margin="dense"
+            id="text-field-number"
+            onChange={(event) =>
+                props.setData(event.target.value)
+            }
+            label="Chanting"
+            type="number"
+            value={props.data}
+            variant="outlined"
+            size="small"
+            InputProps={{ inputProps: { min: 0, max: 1000 } }}
+        />
+    )
 }
 
 export default function AddPractices(props) {
@@ -155,7 +176,14 @@ export default function AddPractices(props) {
         });
     };
 
-    const [addPractice, {data, loading, error}] = useMutation(ADD_UPDATE_PRACTICE);
+    const [addPractice, {data, loading, error}] = useMutation(ADD_UPDATE_PRACTICE, {
+        refetchQueries: [
+            {query: GET_PRACTICES_BY_DATE},
+            'GetPracticesByDateRange',
+            {query: GET_USERS_CREATED_BY},
+            'GetAllUsersByUserCreatedByField'
+        ]
+    });
     if (loading) return 'Submitting...';
     if (error) return `Submission error! ${error.message}`;
 
@@ -194,7 +222,6 @@ export default function AddPractices(props) {
                                                                 setSelectUser={setSelectedUser}
                                                                 userDetailsValue={createdUserValue}
                                                                 setUserDetailsValue={setCreatedUserValue}/>
-                                        {/*<TextInput name={'User ID'} data={userId} setInput={setUserId}/>*/}
                                     </Stack>
                                 </Grid>
                                 <Grid item>
@@ -203,8 +230,8 @@ export default function AddPractices(props) {
                                         <LabelCheckbox label={'SPP'} data={spp} setData={setSpp}/>
                                     </Stack>
                                     <Stack direction="row" spacing={componentSpacing} paddingTop={componentPaddingT}>
-                                        <SelectAutoWidth name={'Chanting'} data={chanting} setData={setChanting}/>
                                         <SelectAutoWidth name={'PF'} data={pf} setData={setPf}/>
+                                        <TextFieldNum data={chanting} setData={setChanting}/>
                                     </Stack>
                                     <Stack direction="row" spacing={componentSpacing} paddingTop={componentPaddingT}>
                                         <SelectAutoWidth name={'HKM'} data={hkm} setData={setHkm}/>
