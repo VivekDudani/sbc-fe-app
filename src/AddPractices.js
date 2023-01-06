@@ -2,7 +2,7 @@ import {gql, useMutation, useQuery} from "@apollo/client";
 import {useState} from "react";
 import dayjs from "dayjs";
 import {Box, Button, Container, Dialog, DialogActions, DialogContent, Grid, Stack} from "@mui/material";
-import DatePicker from "./DatePicker";
+import DatePicker from "./components/DatePicker";
 import SelectAutoWidth from "./AutoWidthSelect";
 import TextInput from "./components/TextInput";
 import LabelCheckbox from "./components/LabelCheckbox";
@@ -12,7 +12,7 @@ import TextField from "@mui/material/TextField";
 import {GET_PRACTICES_BY_DATE, getFormattedDate} from "./DisplayPractices";
 
 const ADD_UPDATE_PRACTICE = gql`
-    mutation CreateOrUpdateDailyPractice($userName: String!, $fullName: String, $practiceDate: Date!, $ssip: Boolean, $spp: Boolean,
+    mutation CreateOrUpdateDailyPractice($userName: String!, $fullName: String!, $practiceDate: Date!, $ssip: Boolean, $spp: Boolean,
         $chanting: Int, $hkm: Int, $scs: Int, $pf: Int, $rr: Int, $bgCount: Int, $bg: String, $spPostCount: Int, $spPost: String,
         $otCount: Int,$others: String, $isUserAuthenticated: Boolean, $userCreatedBy: String) {
         createOrUpdateDailyPractice(userName:$userName, fullName:$fullName, practiceDate:$practiceDate, ssip:$ssip, spp:$spp,
@@ -86,7 +86,7 @@ const TextFieldNum = (props) => {
     return (
         <TextField
             autoFocus
-            sx={{ maxWidth: 75 }}
+            sx={{maxWidth: 75}}
             // margin="dense"
             id="text-field-number"
             onChange={(event) =>
@@ -97,7 +97,7 @@ const TextFieldNum = (props) => {
             value={props.data}
             variant="outlined"
             size="small"
-            InputProps={{ inputProps: { min: 0, max: 1000 } }}
+            InputProps={{inputProps: {min: 0, max: 1000}}}
         />
     )
 }
@@ -114,7 +114,7 @@ export default function AddPractices(props) {
     const [dateVal, setDateValue] = useState(dayjs(new Date()));
 
     let loggedInUserDetails = props.userDetails;
-    let allCreatedUsers = GetUsersCreatedByCurrentUser(loggedInUserDetails.userID);
+    let allCreatedUsers = GetUsersCreatedByCurrentUser(loggedInUserDetails.email);
 
     const [selectedUser, setSelectedUser] = useState(null);
     const [createdUserValue, setCreatedUserValue] = useState({
@@ -141,10 +141,10 @@ export default function AddPractices(props) {
         addPractice({
             variables: {
                 practiceDate: getFormattedDate(dateVal),
-                userName: selectedUser === null ? loggedInUserDetails.userID : selectedUser.userName,
+                userName: selectedUser === null ? loggedInUserDetails.email : selectedUser.userName,
                 // userName: 'VivekD',
-                fullName: selectedUser === null ? loggedInUserDetails.fullName : selectedUser.fullName,
-                // fullName: loggedInUserDetails.fullName,
+                fullName: selectedUser === null ? loggedInUserDetails.name : selectedUser.fullName,
+                // fullName: loggedInUserDetails.name,
                 ssip: ssip,
                 spp: spp,
                 chanting: chanting,
@@ -159,8 +159,8 @@ export default function AddPractices(props) {
                 otCount: otCount,
                 others: otText,
                 // isUserAuthenticated: false,
-                isUserAuthenticated: selectedUser === null ? true : loggedInUserDetails.userID !== null,
-                userCreatedBy: selectedUser === null ? null : loggedInUserDetails.userID
+                isUserAuthenticated: selectedUser === null ? true : loggedInUserDetails.email !== null,
+                userCreatedBy: selectedUser === null ? null : loggedInUserDetails.email
             }
         }).then(r => {
             console.log(r)
@@ -168,11 +168,11 @@ export default function AddPractices(props) {
                 alert(r.errors.message)
             } else {
                 alert("Practice Added Successfully.");
+                resetPracticeValues({
+                    setSsip, setSpp, setChanting, setPf, setHkm, setScs, setRr, setBgCount, setSpCount, setOtCount,
+                    setBgText, setSpText, setOtText, setSelectedUser
+                });
             }
-            resetPracticeValues({
-                setSsip, setSpp, setChanting, setPf, setHkm, setScs, setRr, setBgCount, setSpCount, setOtCount,
-                setBgText, setSpText, setOtText, setSelectedUser
-            });
         });
     };
 

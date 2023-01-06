@@ -2,7 +2,7 @@ import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {TextField} from "@mui/material";
 import {MobileDatePicker} from "@mui/x-date-pickers";
-import {getWeekStartAndEndDate} from './DisplayPractices'
+import {getWeekStartAndEndDate} from '../DisplayPractices'
 
 export default function DatePicker (props) {
     const handleChange = (newValue) => {

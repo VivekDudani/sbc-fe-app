@@ -98,7 +98,7 @@ export function DisplayPractices() {
 
     return (
         // <React.Fragment>
-        <Box sx={{flexGrow: 1}} paddingLeft={2} paddingTop={2} paddingRight={2} paddingBottom={3}>
+        <Box sx={{flexGrow: 1}} paddingLeft={2} paddingTop={3} paddingRight={2} paddingBottom={3}>
             <Container maxWidth="1g">
                 <Grid container spacing={1} paddingBottom={2}>
                     <TextField
@@ -108,6 +108,7 @@ export function DisplayPractices() {
                         fullWidth
                         label="Search User Practice"
                         size="medium"
+                        sx={{ width: '100%', maxWidth: 1060 }}
                         InputProps={{
                             endAdornment: <InputAdornment position="end">
                                 <SearchOutlined/>
