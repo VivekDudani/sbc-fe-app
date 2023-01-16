@@ -9,7 +9,7 @@ import {AppProvider} from "./context";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const client = new ApolloClient({
-    uri: 'http://localhost:8080/graphql',
+    uri: process.env.REACT_APP_SBC_BE_ENDPOINT,
     cache: new InMemoryCache(),
 });
 

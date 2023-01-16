@@ -49,7 +49,7 @@ const GET_USERS_CREATED_BY = gql`
 
 function resetPracticeValues({
                                  setSsip, setSpp, setChanting, setPf, setHkm, setScs, setRr,
-                                 setBgCount, setSpCount, setOtCount, setBgText, setSpText, setOtText, setSelectedUser
+                                 setBgCount, setSpCount, setOtCount, setBgText, setSpText, setOtText
                              }) {
     setSsip(false)
     setSpp(false)
@@ -64,7 +64,6 @@ function resetPracticeValues({
     setBgText('');
     setSpText('');
     setOtText('');
-    setSelectedUser('')
 }
 
 function GetUsersCreatedByCurrentUser(userName) {
@@ -136,14 +135,16 @@ export default function AddPractices(props) {
     const [otCount, setOtCount] = useState(0);
     const [otText, setOtText] = useState('');
 
+    const otherUserSelected = selectedUser!== null && selectedUser!== undefined && selectedUser.toString().trim() !== "";
+
     const handleSubmitPractice = (e) => {
         // e.preventDefault();
         addPractice({
             variables: {
                 practiceDate: getFormattedDate(dateVal),
-                userName: selectedUser === null ? loggedInUserDetails.email : selectedUser.userName,
+                userName: otherUserSelected===false ? loggedInUserDetails.email : selectedUser.userName,
                 // userName: 'VivekD',
-                fullName: selectedUser === null ? loggedInUserDetails.name : selectedUser.fullName,
+                fullName: otherUserSelected===false ? loggedInUserDetails.name : selectedUser.fullName,
                 // fullName: loggedInUserDetails.name,
                 ssip: ssip,
                 spp: spp,
@@ -170,7 +171,7 @@ export default function AddPractices(props) {
                 alert("Practice Added Successfully.");
                 resetPracticeValues({
                     setSsip, setSpp, setChanting, setPf, setHkm, setScs, setRr, setBgCount, setSpCount, setOtCount,
-                    setBgText, setSpText, setOtText, setSelectedUser
+                    setBgText, setSpText, setOtText
                 });
             }
         });

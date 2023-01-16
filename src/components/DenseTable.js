@@ -6,10 +6,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {makeStyles} from "@mui/material";
+import dayjs from "dayjs";
+
+function getFormattedDate(inputDate) {
+    return dayjs(inputDate).format("DD-MMM-YY");
+}
 
 export default function DenseTable(practices) {
-    // console.log(practices)
     const checkBoolValue = (boolValue) => {
         if (boolValue) {
             return 'Yes'
@@ -47,7 +50,7 @@ export default function DenseTable(practices) {
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row" align="center" size="small">
-                                {row.practiceDate}
+                                {getFormattedDate(row.practiceDate)}
                             </TableCell>
 
                             <TableCell align="center">{checkBoolValue(row.ssip)}</TableCell>

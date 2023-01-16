@@ -35,6 +35,9 @@ export const GET_PRACTICES_BY_DATE = gql`
                 }
                 practiceDate ssip spp chanting hkm scs pf rr bgCount bg spPostCount sp otCount ot
             }
+            practiceTotal {
+                ssip spp chanting hkm scs pf rr bg sp ot
+            }
         }
     }
 `;
@@ -60,11 +63,11 @@ export function getWeekStartAndEndDate() {
 
 function FetchPracticeData() {
     const {fd, ld} = getWeekStartAndEndDate();
-    // console.log(getFormattedDate(fd), getFormattedDate(ld));
     // let startDate = "2022-12-11";
     let startDate = getFormattedDate(fd);
     // let endDate = "2022-12-18";
     let endDate = getFormattedDate(ld);
+    console.log(startDate, endDate);
 
     const {loading, error, data} = useQuery(GET_PRACTICES_BY_DATE, {
         variables: {startDate, endDate},
@@ -127,12 +130,14 @@ function DisplayPractice({practiceData}) {
     // console.log(practiceData);
     return practiceData.map(({
                                  userName,
-                                 practices
+                                 practices,
+                                 practiceTotal
                              }) =>
         (
             <Grid container spacing={1}>
                 <NestedList userName={practices.length > 0 ? practices[0].userDetails.fullName : userName}
-                            practices={practices}/>
+                            practices={practices}
+                            practiceTotal={practiceTotal}/>
             </Grid>
         ));
 }

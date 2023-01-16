@@ -3,8 +3,7 @@ import {GoogleLogout} from 'react-google-login';
 import {gapi} from "gapi-script";
 import Button from "@mui/material/Button";
 
-const clientId = '773779419187-vq3ct5ff3tlhtv9q0gv67j5mvdnd6agp.apps.googleusercontent.com';
-
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 // '707788443358-u05p46nssla3l8tmn58tpo9r5sommgks.apps.googleusercontent.com';
 
 function GLogout() {
@@ -18,6 +17,7 @@ function GLogout() {
     const onSuccess = () => {
         console.log('Logged out successfully');
         localStorage.removeItem("user");
+        document.cookie = "G_AUTHUSER_H=; G_ENABLED_IDPS=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         window.location.reload();
     };
 

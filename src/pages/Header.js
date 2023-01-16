@@ -24,7 +24,7 @@ function Header() {
                     sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
                 >
                     {/*<img src={logo} alt="#" style={{height: 50}}/>*/}
-                    SoulPeace
+                    SOULPEACE
                 </Typography>
 
                 <Box sx={{ display: { xs: 'none', sm: 'block' } }}>

@@ -3,12 +3,12 @@ import {gapi} from "gapi-script";
 import {GoogleLogin} from 'react-google-login';
 // refresh token
 
-const clientId = '773779419187-vq3ct5ff3tlhtv9q0gv67j5mvdnd6agp.apps.googleusercontent.com'
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 // '707788443358-u05p46nssla3l8tmn58tpo9r5sommgks.apps.googleusercontent.com';
 
 function GLogin() {
     gapi.load("client:auth2", () => {
-        gapi.auth2.init({
+        gapi.client.init({
             clientId: clientId,
             plugin_name: "chat",
         });
